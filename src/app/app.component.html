@@ -1,0 +1,16 @@
+<mat-drawer-container class="app-container" [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'">
+        <mat-nav-list id="menu">
+            <mat-nav-list>
+                <button id="menu-close" mat-button (click)="drawer.close()"><mat-icon>close</mat-icon></button>
+                <a mat-list-item routerLinkActive="active" routerLink="/vocabulary">Vocabulary</a>
+            </mat-nav-list>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-navbar (openMenu)="drawer.open()"></app-navbar>
+        <div class="outlet-container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

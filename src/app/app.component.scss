@@ -1,0 +1,30 @@
+.app-container {
+    min-height: 100vh;
+    overflow-x: hidden!important;
+    overflow-y: auto!important;
+    -webkit-overflow-scrolling: touch;
+    .mat-drawer {
+        min-width: 250px;
+    }
+    .outlet-container {
+        padding: 40px 20px;
+    }
+}
+
+#menu {
+    padding-top: 0;
+    .mat-list-base {
+        padding-top: 0;
+    }
+}
+
+#menu-close {
+    padding: 5px 12px;
+    line-height: 0;
+    min-width: 0;
+    .mat-icon {
+        font-size: 32px;
+        height: 32px;
+        width: 32px;
+    }
+}

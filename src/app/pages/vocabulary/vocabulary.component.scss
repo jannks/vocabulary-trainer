@@ -1,0 +1,30 @@
+.vocable-card {
+    margin-right: 1%;
+    margin-top: 10px;
+    position: relative;
+    .vocable-text {
+        width: calc(100% - 30px);
+    }
+    .vocable-controls {
+        position: absolute;
+        top: 25px;
+        right: 10px;
+        .mat-icon-button {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+    }
+}
+
+.top-button {
+    margin-bottom: 16px;
+}
+
+.menu-button {
+    .mat-icon {
+        font-size: 16px;
+        width: 18px;
+        height: 18px;
+    }
+}

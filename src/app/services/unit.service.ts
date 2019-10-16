@@ -10,11 +10,11 @@ export class UnitService {
     private table: Dexie.Table<UnitModel, number>;
 
     constructor(private dexieService: DexieService) {
-        this.table = this.dexieService.table("units");
+        this.table = this.dexieService.table('units');
     }
 
     public getAll(): Promise<UnitModel[]> {
-        return this.table.toArray();
+        return this.table.reverse().toArray();
     }
 
     public add(unit: UnitModel): Promise<number> {

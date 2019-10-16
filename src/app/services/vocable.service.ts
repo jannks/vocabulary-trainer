@@ -11,15 +11,15 @@ export class VocableService {
     private table: Dexie.Table<VocableModel, number>;
 
     constructor(private dexieService: DexieService) {
-        this.table = this.dexieService.table("vocables");
+        this.table = this.dexieService.table('vocables');
     }
 
     public getAll(): Promise<VocableModel[]> {
-        return this.table.toArray();
+        return this.table.reverse().toArray();
     }
 
     public getAllFromUnit(unit: UnitModel): Promise<VocableModel[]> {
-        return this.table.where('unitId').equals(unit.id).toArray();
+        return this.table.where('unitId').equals(unit.id).reverse().toArray();
     }
 
     public add(vocable: VocableModel): Promise<number> {

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Vocable</h1>
+<div mat-dialog-content>
+    <p>
+        <mat-form-field class="full-width-input">
+            <input matInput placeholder="First meaning" [(ngModel)]="firstMeaning">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field class="full-width-input">
+            <input matInput placeholder="Second meaning" [(ngModel)]="secondMeaning">
+        </mat-form-field>
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+</div>

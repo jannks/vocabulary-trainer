@@ -1,3 +1,45 @@
-<div class="card">
-    <div class="title">test123</div>
+<div class="section">
+    <button mat-button class="control top-button" (click)="addUnit()"><mat-icon>playlist_add</mat-icon> Add Unit</button>
+
+    <mat-menu #settMenu="matMenu">
+        <ng-template matMenuContent let-vocable="vocable" let-index="index" let-unit="unit">
+            <button mat-menu-item class="menu-button" (click)="updateVocable(vocable)">
+                <mat-icon>edit</mat-icon> Edit
+            </button>
+            <button mat-menu-item class="menu-button" (click)="deleteVocable(vocable, index, unit)">
+                <mat-icon>delete</mat-icon> Delete
+            </button>
+        </ng-template>
+    </mat-menu>
+
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let unit of units; index as i">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{unit.name}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-button class="control"><mat-icon>playlist_play</mat-icon></button>
+            <button mat-button class="control" (click)="addVocable(unit)"><mat-icon>note_add</mat-icon></button>
+            <button mat-button class="control" (click)="updateUnit(unit)"><mat-icon>edit</mat-icon></button>
+            <button mat-button class="control" (click)="deleteUnit(unit, i)"><mat-icon>delete</mat-icon></button>
+            <div *ngIf="vocables.has(unit.id)" fxLayout="row wrap" fxLayout.lt-sm="column">
+                <div *ngFor="let vocable of vocables.get(unit.id); index as n" fxFlex="24">
+                    <mat-card class="vocable-card">
+                        <div class="vocable-text">
+                            <p>{{vocable.firstMeaning}}</p>
+                            <p>{{vocable.secondMeaning}}</p>
+                        </div>
+                        <div class="vocable-controls">
+                            <button mat-icon-button class="settings-trigger"
+                                    [matMenuTriggerFor]="settMenu"
+                                    [matMenuTriggerData]="{vocable: vocable, index: n, unit: unit}">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

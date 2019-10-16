@@ -19,12 +19,14 @@
                     {{unit.name}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <button mat-button class="control"><mat-icon>playlist_play</mat-icon></button>
-            <button mat-button class="control" (click)="addVocable(unit)"><mat-icon>note_add</mat-icon></button>
-            <button mat-button class="control" (click)="updateUnit(unit)"><mat-icon>edit</mat-icon></button>
-            <button mat-button class="control" (click)="deleteUnit(unit, i)"><mat-icon>delete</mat-icon></button>
-            <div *ngIf="vocables.has(unit.id)" fxLayout="row wrap" fxLayout.lt-sm="column">
-                <div *ngFor="let vocable of vocables.get(unit.id); index as n" fxFlex="24">
+            <div class="unit-controls">
+                <button mat-button class="control"><mat-icon>playlist_play</mat-icon></button>
+                <button mat-button class="control" (click)="addVocable(unit)"><mat-icon>note_add</mat-icon></button>
+                <button mat-button class="control" (click)="updateUnit(unit)"><mat-icon>edit</mat-icon></button>
+                <button mat-button class="control" (click)="deleteUnit(unit, i)"><mat-icon>delete</mat-icon></button>
+            </div>
+            <div *ngIf="vocables.has(unit.id)" fxLayout="row wrap">
+                <div *ngFor="let vocable of vocables.get(unit.id); index as n" fxFlex.gt-sm="33.333333333" fxFlex.lt-md="100">
                     <mat-card class="vocable-card">
                         <div class="vocable-text">
                             <p>{{vocable.firstMeaning}}</p>

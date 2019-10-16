@@ -1,3 +1,14 @@
+.unit-controls {
+    .control {
+        margin-right: 10px;
+        min-width: unset;
+        padding: 0 12px;
+    }
+    .control:last-child {
+        margin-right: 0;
+    }
+}
+
 .vocable-card {
     margin-right: 1%;
     margin-top: 10px;
@@ -26,5 +37,11 @@
         font-size: 16px;
         width: 18px;
         height: 18px;
+    }
+}
+
+@media(max-width: 959px) {
+    .vocable-card {
+        margin-right: 0;
     }
 }

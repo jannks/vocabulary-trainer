@@ -13,6 +13,10 @@ export class UnitService {
         this.table = this.dexieService.table('units');
     }
 
+    public get(id: number): Promise<UnitModel> {
+        return this.table.where('id').equals(id).first();
+    }
+
     public getAll(): Promise<UnitModel[]> {
         return this.table.reverse().toArray();
     }

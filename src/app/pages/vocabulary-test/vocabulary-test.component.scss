@@ -1,0 +1,44 @@
+.test-controls {
+    .left {
+        width: 50%;
+        display: inline-block;
+        text-align: left;
+        .mat-icon {
+            line-height: 34px;
+            font-size: 34px;
+            height: 34px;
+            width: 34px;
+        }
+    }
+    .right {
+        width: 50%;
+        display: inline-block;
+        text-align: right;
+    }
+}
+
+.test-card {
+    word-break: break-word;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-height: 150px;
+    .corr-hint {
+        color: #118411;
+    }
+}
+
+.results {
+    .corr {
+        color: #118411;
+    }
+    .wrong {
+        color: #b52727;
+    }
+    .question-result {
+        padding-left: 20px;
+    }
+}
+
+.evaluate-button {
+    margin-top: 30px;
+}

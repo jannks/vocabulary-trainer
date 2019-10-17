@@ -1,0 +1,52 @@
+<div class="section" *ngIf="loaded">
+    <div class="test-controls">
+        <div class="left">
+            <button mat-icon-button class=""
+                    [disabled]="selectedTab === 0" (click)="selectedTab = selectedTab - 1">
+                <mat-icon>arrow_left</mat-icon>
+            </button>
+            <button mat-icon-button class=""
+                    [disabled]="selectedTab >= vocabularyTest.vocableQuestions.length - 1" (click)="selectedTab = selectedTab + 1">
+                <mat-icon>arrow_right</mat-icon>
+            </button>
+        </div>
+        <div class="right">
+            <button mat-icon-button class="" (click)="shuffleArray(vocabularyTest.vocableQuestions)">
+                <mat-icon>shuffle</mat-icon>
+            </button>
+            <button mat-icon-button class="" (click)="switchQuestionsAnswers()">
+                <mat-icon>swap_vert</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-tab-group [(selectedIndex)]="selectedTab" [headerPosition]="'below'">
+        <mat-tab [label]="(i + 1) + '.'" *ngFor="let question of vocabularyTest.vocableQuestions; index as i">
+            <mat-card class="test-card">
+                <p class="test-question">{{question.question}}</p>
+                <p class="test-input">
+                    <mat-form-field class="full-width-input">
+                        <input type="text" matInput autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                               placeholder="Answer" [(ngModel)]="question.answer">
+                        <mat-hint class="corr-hint" *ngIf="!question.isCorrect && showResults">
+                            {{question.correctAnswer}}
+                        </mat-hint>
+                    </mat-form-field>
+                </p>
+            </mat-card>
+        </mat-tab>
+        <mat-tab *ngIf="showResults" label="Results">
+            <mat-card class="test-card results">
+                <mat-list>
+                    <mat-list-item *ngFor="let question of vocabularyTest.vocableQuestions; index as i">
+                        <mat-icon class="corr" *ngIf="question.isCorrect">check_circle</mat-icon>
+                        <mat-icon class="wrong" *ngIf="!question.isCorrect">remove_circle</mat-icon>
+                        <span class="question-result">{{(i + 1) + '.'}} Question</span>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+
+    <button mat-button class="control evaluate-button" (click)="evaluateTest()">Evaluate Test</button>
+</div>

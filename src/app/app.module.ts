@@ -12,6 +12,7 @@ import {DexieService} from './services/dexie.service';
 import {AddVocableDialogComponent} from './pages/vocabulary/add-vocable-dialog/add-vocable-dialog.component';
 import { AddUnitDialogComponent } from './pages/vocabulary/add-unit-dialog/add-unit-dialog.component';
 import {FormsModule} from '@angular/forms';
+import { VocabularyTestComponent } from './pages/vocabulary-test/vocabulary-test.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {FormsModule} from '@angular/forms';
         VocabularyComponent,
         NavbarComponent,
         AddVocableDialogComponent,
-        AddUnitDialogComponent
+        AddUnitDialogComponent,
+        VocabularyTestComponent
     ],
     imports: [
         BrowserModule,

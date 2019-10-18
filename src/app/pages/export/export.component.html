@@ -1,0 +1,9 @@
+<div class="section">
+    <a id="downloadLink"  mat-button class="control top-button" [disabled]="activeExport"
+       (click)="createAndOpenFile()">Donwload</a>
+    <mat-selection-list [(ngModel)]="selectedUnits">
+        <mat-list-option *ngFor="let unit of units" [value]="unit">
+            {{unit.name}}
+        </mat-list-option>
+    </mat-selection-list>
+</div>

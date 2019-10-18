@@ -13,6 +13,10 @@ import {AddVocableDialogComponent} from './pages/vocabulary/add-vocable-dialog/a
 import { AddUnitDialogComponent } from './pages/vocabulary/add-unit-dialog/add-unit-dialog.component';
 import {FormsModule} from '@angular/forms';
 import { VocabularyTestComponent } from './pages/vocabulary-test/vocabulary-test.component';
+import { ImportComponent } from './pages/import/import.component';
+import { ExportComponent } from './pages/export/export.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -21,7 +25,9 @@ import { VocabularyTestComponent } from './pages/vocabulary-test/vocabulary-test
         NavbarComponent,
         AddVocableDialogComponent,
         AddUnitDialogComponent,
-        VocabularyTestComponent
+        VocabularyTestComponent,
+        ImportComponent,
+        ExportComponent
     ],
     imports: [
         BrowserModule,
@@ -29,7 +35,8 @@ import { VocabularyTestComponent } from './pages/vocabulary-test/vocabulary-test
         BrowserAnimationsModule,
         CustomMaterialModule,
         FlexLayoutModule,
-        FormsModule
+        FormsModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     entryComponents: [
         AddVocableDialogComponent,

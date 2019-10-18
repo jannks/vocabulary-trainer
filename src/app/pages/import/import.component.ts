@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ExportUnitModel} from '../../models/export.model';
 import {UnitService} from '../../services/unit.service';
 import {VocableService} from '../../services/vocable.service';
+import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-import',
@@ -16,7 +18,8 @@ export class ImportComponent implements OnInit {
 
     constructor(
         private unitService: UnitService,
-        private vocableService: VocableService) {
+        private vocableService: VocableService,
+        private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -43,7 +46,9 @@ export class ImportComponent implements OnInit {
                 this.units = JSON.parse(loadEvent.target.result);
                 this.selectedUnits = [];
             } catch (error) {
-                console.error(error);
+                this.snackBar.open('File is corrupt!', 'Ok', {
+                    duration: 3000,
+                });
             }
         };
         reader.readAsText(file);
@@ -70,6 +75,10 @@ export class ImportComponent implements OnInit {
         this.selectedUnits = [];
         this.units = [];
         this.activeImport = false;
+
+        this.snackBar.open('Success!', 'Ok', {
+            duration: 3000,
+        });
     }
 
 }

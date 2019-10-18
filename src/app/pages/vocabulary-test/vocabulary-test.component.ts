@@ -19,7 +19,7 @@ export class VocabularyTestComponent implements OnInit {
 
     private unit: UnitModel;
     private vocables: VocableModel[];
-    private vocabularyTest: VocabularyTestModel;
+    public vocabularyTest: VocabularyTestModel;
 
     constructor(
         private unitService: UnitService,

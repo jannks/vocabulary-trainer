@@ -56,6 +56,7 @@ export class VocabularyComponent implements OnInit {
                     this.unitService.add(result).then(
                         (id: number) => {
                             result.id = id;
+                            this.vocables.set(id, []);
                         });
                 }
             });

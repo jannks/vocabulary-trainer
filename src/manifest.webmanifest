@@ -1,6 +1,6 @@
 {
-  "name": "vocabulary-trainer",
-  "short_name": "vt",
+  "name": "Vocabulary Trainer",
+  "short_name": "VT",
   "theme_color": "#303030",
   "background_color": "#303030",
   "display": "standalone",

@@ -20,7 +20,7 @@ export interface VocablePage {
 })
 export class VocabularyComponent implements OnInit {
 
-    public defaultPageSize = 12;
+    public defaultPageSize = window.innerWidth < 960 ? 3 : 12;
     public pageSizeOptions = [3, 6, 12, 24, 48];
 
     public units: UnitModel[];

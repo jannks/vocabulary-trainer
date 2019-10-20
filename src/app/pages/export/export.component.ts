@@ -11,6 +11,7 @@ import {ExportUnitModel, ExportVocableModel} from '../../models/export.model';
 export class ExportComponent implements OnInit {
 
     public activeExport: boolean;
+    public downloadReady: boolean;
     public units: UnitModel[];
     public selectedUnits: UnitModel[];
 
@@ -21,6 +22,7 @@ export class ExportComponent implements OnInit {
 
     ngOnInit() {
         this.activeExport = false;
+        this.downloadReady = false;
         this.selectedUnits = [];
 
         this.unitService.getAll().then(
@@ -30,12 +32,13 @@ export class ExportComponent implements OnInit {
         );
     }
 
-    public async createAndOpenFile(): Promise<void> {
+    public async prepareFile(): Promise<void> {
         if (this.selectedUnits.length < 1 || this.activeExport) {
             return;
         }
 
         this.activeExport = true;
+        this.downloadReady = false;
         const exportUnits: ExportUnitModel[] = [];
 
         for (const unit of this.selectedUnits) {
@@ -57,11 +60,12 @@ export class ExportComponent implements OnInit {
 
         const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportUnits));
         const element = document.getElementById('downloadLink');
-        element.setAttribute('href', dataStr);
-        element.setAttribute('download', 'units.json');
-        element.click();
+
+        await element.setAttribute('href', dataStr);
+        await element.setAttribute('download', 'units.json');
 
         this.activeExport = false;
+        this.downloadReady = true;
     }
 
 }

@@ -1,13 +1,12 @@
 <div class="section">
     <button mat-button class="control top-button" (click)="fileInput.click()">Choose File</button>
     <input hidden (change)="fileUploadEvent($event)" #fileInput type="file" id="file" accept="application/JSON">
+    <button [disabled]="selectedUnits.length === 0 ||activeImport"
+            mat-button class="control top-button" (click)="save()">Save</button>
 
     <mat-selection-list [(ngModel)]="selectedUnits">
         <mat-list-option *ngFor="let unit of units" [value]="unit">
             {{unit.name}}
         </mat-list-option>
     </mat-selection-list>
-
-    <button *ngIf="selectedUnits.length > 0" [disabled]="activeImport"
-            mat-button class="control bot-button" (click)="save()">Save</button>
 </div>

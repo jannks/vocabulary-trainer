@@ -179,11 +179,13 @@ export class VocabularyComponent implements OnInit {
         page.vocableLength--;
         this.vocableService.remove(vocable).then(
             () => {
-                this.vocableService.getUnitRange(unit, page.size * page.index, page.size).then(
-                    (vocables: VocableModel[]) => {
-                        page.vocables = vocables;
-                    }
-                );
+                if (page.vocableLength >= page.size) {
+                    this.vocableService.getUnitRange(unit, page.size * page.index, page.size).then(
+                        (vocables: VocableModel[]) => {
+                            page.vocables = vocables;
+                        }
+                    );
+                }
             }
         );
     }

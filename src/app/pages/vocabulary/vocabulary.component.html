@@ -27,8 +27,8 @@
                 <button mat-button class="control" (click)="updateUnit(unit)"><mat-icon>edit</mat-icon></button>
                 <button mat-button class="control" (click)="deleteUnit(unit, i)"><mat-icon>delete</mat-icon></button>
             </div>
-            <div *ngIf="vocables.has(unit.id)" fxLayout="row wrap">
-                <div *ngFor="let vocable of vocables.get(unit.id); index as n" fxFlex.gt-sm="33.333333333" fxFlex.lt-md="100">
+            <div *ngIf="vocablePages.has(unit.id)" fxLayout="row wrap">
+                <div *ngFor="let vocable of vocablePages.get(unit.id).vocables; index as n" fxFlex.gt-sm="33.333333333" fxFlex.lt-md="100">
                     <mat-card class="vocable-card">
                         <div class="vocable-text">
                             <p>{{vocable.firstMeaning}}</p>
@@ -44,6 +44,10 @@
                     </mat-card>
                 </div>
             </div>
+            <mat-paginator *ngIf="vocablePages.has(unit.id)" [length]="vocablePages.get(unit.id).vocableLength"
+                           [pageSize]="vocablePages.get(unit.id).size" [pageSizeOptions]="pageSizeOptions"
+                           (page)="pageChange($event, unit)">
+            </mat-paginator>
         </mat-expansion-panel>
     </mat-accordion>
 </div>

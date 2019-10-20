@@ -2,9 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {UnitService} from '../../services/unit.service';
 import {VocableModel} from '../../models/vocable.model';
 import {VocableService} from '../../services/vocable.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, PageEvent} from '@angular/material';
 import {AddUnitDialog, AddUnitDialogComponent} from './add-unit-dialog/add-unit-dialog.component';
 import {AddVocableDialog, AddVocableDialogComponent} from './add-vocable-dialog/add-vocable-dialog.component';
+
+export interface VocablePage {
+    vocables: VocableModel[];
+    vocableLength: number;
+    size: number;
+    index: number;
+}
 
 @Component({
     selector: 'app-vocabulary',
@@ -13,8 +20,11 @@ import {AddVocableDialog, AddVocableDialogComponent} from './add-vocable-dialog/
 })
 export class VocabularyComponent implements OnInit {
 
+    public defaultPageSize = 12;
+    public pageSizeOptions = [3, 6, 12, 24, 48];
+
     public units: UnitModel[];
-    public vocables: Map<number, VocableModel[]>;
+    public vocablePages: Map<number, VocablePage>;
 
     constructor(
         private unitService: UnitService,
@@ -35,12 +45,28 @@ export class VocabularyComponent implements OnInit {
         );
     }
 
+    // Controls
+
     private async initVocables(): Promise<void> {
-        this.vocables = new Map();
+        this.vocablePages = new Map();
         for (const unit of this.units) {
-            this.vocables.set(unit.id, await this.vocableService.getAllFromUnit(unit));
+            this.vocablePages.set(unit.id, {
+                vocables: await this.vocableService.getUnitRange(unit, 0, this.defaultPageSize),
+                vocableLength: await this.vocableService.getUnitSize(unit),
+                size:  this.defaultPageSize,
+                index: 0
+            } as VocablePage);
         }
     }
+
+    public async pageChange(event: PageEvent, unit: UnitModel): Promise<void> {
+        const page = this.vocablePages.get(unit.id);
+        page.size = event.pageSize;
+        page.index = event.pageIndex;
+        page.vocables = await this.vocableService.getUnitRange(unit, page.size * page.index, page.size);
+    }
+
+    // Service
 
     public addUnit(): void {
         const dialogRef = this.dialog.open(AddUnitDialogComponent, {
@@ -56,7 +82,12 @@ export class VocabularyComponent implements OnInit {
                     this.unitService.add(result).then(
                         (id: number) => {
                             result.id = id;
-                            this.vocables.set(id, []);
+                            this.vocablePages.set(id,  {
+                                vocables: [],
+                                vocableLength: 0,
+                                size:  this.defaultPageSize,
+                                index: 0
+                            } as VocablePage);
                         });
                 }
             });
@@ -84,7 +115,7 @@ export class VocabularyComponent implements OnInit {
 
     public deleteUnit(unit: UnitModel, index: number): void {
         this.units.splice(index, 1);
-        this.vocables.delete(unit.id);
+        this.vocablePages.delete(unit.id);
         this.unitService.remove(unit).catch(
             (error) => {
                 console.error(error);
@@ -104,7 +135,14 @@ export class VocabularyComponent implements OnInit {
             (result: VocableModel) => {
                 if (result !== null) {
                     result.unitId = unit.id;
-                    this.vocables.get(unit.id).unshift(result);
+
+                    const page = this.vocablePages.get(unit.id);
+                    if (page.vocables.length >= page.size) {
+                        page.vocables.pop();
+                    }
+                    page.vocables.unshift(result);
+                    page.vocableLength++;
+
                     this.vocableService.add(result).then(
                         (id: number) => {
                             result.id = id;
@@ -136,10 +174,16 @@ export class VocabularyComponent implements OnInit {
     }
 
     public deleteVocable(vocable: VocableModel, index: number, unit: UnitModel): void {
-        this.vocables.get(unit.id).splice(index, 1);
-        this.vocableService.remove(vocable).catch(
-            (error) => {
-                console.error(error);
+        const page = this.vocablePages.get(unit.id);
+        page.vocables.splice(index, 1);
+        page.vocableLength--;
+        this.vocableService.remove(vocable).then(
+            () => {
+                this.vocableService.getUnitRange(unit, page.size * page.index, page.size).then(
+                    (vocables: VocableModel[]) => {
+                        page.vocables = vocables;
+                    }
+                );
             }
         );
     }

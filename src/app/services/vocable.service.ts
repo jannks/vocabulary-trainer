@@ -22,6 +22,14 @@ export class VocableService {
         return this.table.where('unitId').equals(unit.id).reverse().toArray();
     }
 
+    public getUnitRange(unit: UnitModel, offset: number, limit: number): Promise<VocableModel[]> {
+        return this.table.where('unitId').equals(unit.id).reverse().offset(offset).limit(limit).toArray();
+    }
+
+    public getUnitSize(unit: UnitModel): Promise<number> {
+        return this.table.where('unitId').equals(unit.id).count();
+    }
+
     public add(vocable: VocableModel): Promise<number> {
         return this.table.add(vocable);
     }
